@@ -36,8 +36,7 @@ const TodoItems = mongoose.model('TodoItems',
         name: {
             type: String,
             required: true
-        },
-        description: String,
+        }
     }
 );
 

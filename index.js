@@ -22,6 +22,10 @@ const Todos = mongoose.model('Todos',
         title: {
             type: String,
             required: true
+        },
+        order: {
+            type: Number,
+            required: true
         }
     }
 );
@@ -36,6 +40,10 @@ const TodoItems = mongoose.model('TodoItems',
         name: {
             type: String,
             required: true
+        },
+        order: {
+            type: Number,
+            required: true
         }
     }
 );
@@ -44,10 +52,10 @@ const TodoItems = mongoose.model('TodoItems',
 const app = express();
 
 // ? Middlewares.
-app.use(cors( {
+app.use(cors({
     origin: '*'
-  }))|
-app.use(express.json());
+})) |
+    app.use(express.json());
 
 // ? Controllers.
 app.get("/todos", async (req, res) => {
@@ -59,7 +67,9 @@ app.get("/todos", async (req, res) => {
         result = Array.from(result).map(item => item._doc);
 
         for (let index = 0; index < result.length; index++) {
+
             const element = result[index];
+
             element.items = await TodoItems.find({ todoId: element._id });
         };
 
@@ -108,6 +118,31 @@ app.put("/todos/:id", async (req, res) => {
             throw new Error("Not found todo!!!");
         };
 
+        res.send();
+
+    } catch (error) {
+
+        console.error(error);
+        res.status(400);
+        res.send({ message: error.message });
+
+    };
+
+});
+
+app.put("/todos/move/:id1/:id2", async (req, res) => {
+
+    try {
+
+        const oneTodo = req.params.id1;
+        const twoTodo = req.params.id2;
+
+        const resultOneTodo = await Todos.findById(oneTodo);
+        const resultTwoTodo = await Todos.findById(twoTodo);
+
+        await Todos.updateOne({ _id: resultOneTodo._id }, { order: resultTwoTodo.order });
+        await Todos.updateOne({ _id: resultTwoTodo._id }, { order: resultOneTodo.order });
+        
         res.send();
 
     } catch (error) {

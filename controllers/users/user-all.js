@@ -1,8 +1,10 @@
+const ModelUsers = require("../../models/users");
+
 module.exports = async function (req, res) {
 
     try {
 
-        let result = await ModelTodoItems.find();
+        let result = await ModelUsers.find();
 
         result = Array.from(result).map(item => item._doc);
 

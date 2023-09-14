@@ -1,3 +1,5 @@
+const ModelUsers = require("../../models/users");
+
 module.exports = async function (req, res) {
 
     try {

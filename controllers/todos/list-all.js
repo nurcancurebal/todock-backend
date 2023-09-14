@@ -1,3 +1,6 @@
+const ModelTodos = require("../../models/todos");
+const ModelTodoItems = require("../../models/todo-items");
+
 module.exports = async function (req, res) {
 
     try {

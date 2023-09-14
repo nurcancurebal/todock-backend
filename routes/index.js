@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require('mongoose');
 
 const ModelTodos = require("../models/todos");
 const ModelTodoItems = require("../models/todo-items");
@@ -243,7 +244,7 @@ router.post("/users/signup", async (req, res) => { //req gelen data
 
 });
 
-router.put("/todos/editaccount/:id", async (req, res) => {
+router.put("/users/editaccount/:id", async (req, res) => {
 
     try {
 
@@ -268,7 +269,7 @@ router.put("/todos/editaccount/:id", async (req, res) => {
 
 });
 
-router.put("/todos/editpassword/:id", async (req, res) => {
+router.put("/users/editpassword/:id", async (req, res) => {
 
     try {
 
@@ -290,31 +291,6 @@ router.put("/todos/editpassword/:id", async (req, res) => {
         res.send({ message: error.message });
 
     };
-
-});
-
-router.delete("/todos/deleteaccount/:id", async (req, res) => {
-
-    try {
-
-        const params = req.params;
-
-        const findUser = await ModelUsers.findByIdAndDelete(params.id);
-
-        if (!findUser) {
-            throw new Error("Not found user!!!");
-        };
-
-        res.send();
-
-    } catch (error) {
-
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
-
-    };
-
 });
 
 module.exports = router;

@@ -11,9 +11,8 @@ router.post("/todo-items", require('../controllers/todo-items/create-one'));
 router.put("/todo-items/:id", require('../controllers/todo-items/update-one'));
 router.delete("/todo-items/:id", require('../controllers/todo-items/delete-one'));
 
-router.get("/users", require('../controllers/users/user-all'));
-router.post("/users/signup", require('../controllers/users/create-user'));
-router.put("/users/editaccount/:id", require('../controllers/users/update-user'));
-router.put("/users/editpassword/:id", require('../controllers/users/update-password'));
+router.get("/auth", require('../controllers/users/users-all'));
+router.post("/auth/signup", require('../controllers/users/create-user'));
+router.put("/auth/editaccount/:id", require('../controllers/users/update-user'));
 
-module.exports = router;
+module.exports = router; // nodejs özelliğidir. router ı kullan diyor

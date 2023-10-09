@@ -1,6 +1,6 @@
 const ModelTodos = require("../../models/todos");
 
-module.exports = async function (req, res) { //req gelen data
+module.exports = async function (req, res) {
 
     try {
 

@@ -14,7 +14,8 @@ module.exports = async function (req, res) {
 
             const element = result[index];
 
-            element.items = await ModelTodos.find({ todoId: element._id });
+            element.todos = await ModelTodos.find({ userId: element._id });
+            element.todos.items = await ModelTodoItems.find({ userId: element._id });
         };
 
         res.send(result);

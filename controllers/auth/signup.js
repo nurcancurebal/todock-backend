@@ -1,20 +1,34 @@
 const ModelUsers = require("../../models/users");
 
-module.exports = async function (req, res) {
+module.exports = async function (req, res, next) {
 
     try {
 
-        console.log("")
+        const body = req.body;
 
-        let result = await ModelUsers.find();
+        if (!body?.username) throw new Error("Username not found!");
+        if (!body?.password) throw new Error("Password not found!");
+        if (!body?.firstname) throw new Error("Firstname not found!");
+        if (!body?.lastname) throw new Error("Lastname not found!");
+        if (!body?.birthdate) throw new Error("Birthdate not found!");
+        
+        const data = {
+            username: body.username,
+            password: body.password,
+            firstname: body.firstname,
+            lastname: body.lastname,
+            birthdate: body.birthdate
+        };
 
-        res.send(result);
+        await ModelUsers.create(data);
+
+        res.send();
 
     } catch (error) {
 
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
+        error.status = 400;
+        return next(error);
 
     };
-}
+
+};

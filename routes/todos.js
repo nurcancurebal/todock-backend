@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 
+router.use(require("../middlewares/auth"));
+
 router.get("/", require('../controllers/todos/list-all'));
 router.post("/", require('../controllers/todos/create-one'));
 router.put("/:id", require('../controllers/todos/update-one'));

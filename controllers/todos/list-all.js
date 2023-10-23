@@ -1,11 +1,13 @@
 const ModelTodos = require("../../models/todos");
 const ModelTodoItems = require("../../models/todo-items");
 
-module.exports = async function (req, res) {
+module.exports = async function (req, res, next) {
 
     try {
 
-        let result = await ModelTodos.find();
+        const user = res.locals.user;
+
+        let result = await ModelTodos.find({ userId: user._id });
 
         result = Array.from(result).map(item => item._doc);
 
@@ -13,16 +15,14 @@ module.exports = async function (req, res) {
 
             const element = result[index];
 
-            element.items = await ModelTodoItems.find({ todoId: element._id });
+            element.items = await ModelTodoItems.find({ todoId: element._id, userId: user._id });
         };
 
-        res.send(result);
+        return res.send(result);
 
     } catch (error) {
 
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
+        return next(error);
 
     };
 }

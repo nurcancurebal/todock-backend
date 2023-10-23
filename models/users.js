@@ -12,7 +12,8 @@ const Model = mongoose.model('User',
         },
         username: {
             type: String,
-            required: true
+            required: true,
+            unique: true
         },
         birthdate: {
             type: String,

@@ -7,26 +7,23 @@ module.exports = async function (req, res) {
 
         const body = req.body;
 
-        if (!body.userId || !body.title) {
-            throw new Error("Bad Request!!!");
+        if (!body?.title) throw new Error("Title not found!");
+
+        const user = res.locals.user;
+
+        const data = {
+            title: body.title,
+            userId: user._id
         };
 
-        const findOneUsers = await ModelUsers.findById(body.userId);
+        await ModelTodos.create(data);
 
-        if (!findOneUsers) {
-            throw new Error("Not found user!!!");
-        };
-
-        await ModelTodos.create(body);
-
-        res.send();
+        return res.send();
 
     } catch (error) {
 
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
+        return next(error);
 
     };
 
-}
+};

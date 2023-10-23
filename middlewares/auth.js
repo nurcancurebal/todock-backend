@@ -1,20 +1,46 @@
-const ModelUsers = require("../../models/users");
+const jwt = require("jsonwebtoken");
 
-module.exports = async function (req, res) {
+const ModelUsers = require("../models/users");
+
+const { SECRET } = process.env;
+
+module.exports = async function (req, res, next) {
 
     try {
 
-        console.log("")
+        let token = req?.headers?.authorization;
 
-        let result = await ModelUsers.find();
+        if (!token)  throw new Error("Unauthorized!");
 
-        res.send(result);
+        token = token.split(" ");
+
+        if (token.length != 2)  throw new Error("Unauthorized!");
+
+        token = token[1];
+
+        if (!token) throw new Error("Unauthorized!");
+
+        const checkToken = jwt.verify(token, SECRET);
+
+        const id = checkToken.id;
+
+        if (!id)  throw new Error("Unauthorized!");
+
+        let resultUser = await ModelUsers.findById(id);
+
+        if (!resultUser)  throw new Error("Unauthorized!");
+        
+        resultUser = resultUser._doc;
+
+        res.locals.user = resultUser;
+
+        return next();
 
     } catch (error) {
 
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
+        error.status = 401;
+        return next(error);
 
     };
-}
+
+};

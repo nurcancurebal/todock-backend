@@ -1,20 +1,31 @@
+const jwt = require("jsonwebtoken");
+
 const ModelUsers = require("../../models/users");
 
-module.exports = async function (req, res) {
+const { SECRET } = process.env;
+
+module.exports = async function (req, res, next) {
 
     try {
 
-        console.log("")
+        const body = req.body;
 
-        let result = await ModelUsers.find();
+        if (!body?.username) throw new Error("Username not found!");
+        if (!body?.password) throw new Error("Password not found!");
 
-        res.send(result);
+        const resultUser = await ModelUsers.findOne({ username: body.username });
+
+        if (body.password != resultUser.password) throw new Error("Unauthorized!");
+
+        const token = jwt.sign({ id: resultUser._id.toString() }, SECRET);
+
+        return res.send({ token });
 
     } catch (error) {
 
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
-
+        error.status = 401;
+        return next(error);
+    
     };
-}
+
+};

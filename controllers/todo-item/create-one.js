@@ -1,25 +1,27 @@
-const ModelTodo = require("../../models/todo");
+const { ObjectId } = require("mongoose").Types;
+
 const ModelTodoItem = require("../../models/todo-item");
-const ModelUser = require("../../models/user");
 
 module.exports = async function (req, res, next) {
 
     try {
 
         const body = req.body;
+        const params = req.params;
 
-        if (!body.todoId || !body.name || !body.userId) {
+        if (!body?.name) {
             throw new Error("Bad Request!!!");
         };
 
-        const findOneTodo = await ModelTodo.findById(body.todoId);
-        const findOneUser = await ModelUser.findById(body.userId);
+        const user = res.locals.user;
 
-        if (!findOneTodo || !findOneUser) {
-            throw new Error("Not found todo or user!!!");
+        const data = {
+            name: body.name,
+            userId: user._id,
+            todoId: new ObjectId(params.id)
         };
 
-        await ModelTodoItem.create(body);
+        await ModelTodoItem.create(data);
 
         res.send();
 

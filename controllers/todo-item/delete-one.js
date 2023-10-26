@@ -4,7 +4,8 @@ module.exports = async function (req, res, next) {
 
     try {
 
-        const params = req.params;
+        const _id = new ObjectId(req.params.id);
+        const user = res.locals.user;
 
         const findOneTodoItem = await ModelTodoItem.findByIdAndDelete(params.id);
 

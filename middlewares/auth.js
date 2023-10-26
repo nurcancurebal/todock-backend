@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 
-const ModelUsers = require("../models/users");
+const ModelUser = require("../models/user");
 
 const { SECRET } = process.env;
 
@@ -10,11 +10,11 @@ module.exports = async function (req, res, next) {
 
         let token = req?.headers?.authorization;
 
-        if (!token)  throw new Error("Unauthorized!");
+        if (!token) throw new Error("Unauthorized!");
 
         token = token.split(" ");
 
-        if (token.length != 2)  throw new Error("Unauthorized!");
+        if (token.length != 2) throw new Error("Unauthorized!");
 
         token = token[1];
 
@@ -24,12 +24,12 @@ module.exports = async function (req, res, next) {
 
         const id = checkToken.id;
 
-        if (!id)  throw new Error("Unauthorized!");
+        if (!id) throw new Error("Unauthorized!");
 
-        let resultUser = await ModelUsers.findById(id);
+        let resultUser = await ModelUser.findById(id);
 
-        if (!resultUser)  throw new Error("Unauthorized!");
-        
+        if (!resultUser) throw new Error("Unauthorized!");
+
         resultUser = resultUser._doc;
 
         res.locals.user = resultUser;

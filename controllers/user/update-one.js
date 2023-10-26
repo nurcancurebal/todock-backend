@@ -1,15 +1,16 @@
-const ModelTodoItems = require("../../models/todo-items");
+const ModelUser = require("../../models/user");
 
 module.exports = async function (req, res) {
 
     try {
 
         const params = req.params;
+        const body = req.body;
 
-        const findOneTodoItem = await ModelTodoItems.findByIdAndDelete(params.id);
+        const findUser = await ModelUser.findByIdAndUpdate(params.id, body);
 
-        if (!findOneTodoItem) {
-            throw new Error("Not found todo item!!!");
+        if (!findUser) {
+            throw new Error("Not found user!!!");
         };
 
         res.send();

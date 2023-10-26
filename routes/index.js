@@ -1,19 +1,14 @@
 const express = require("express");
 const router = express.Router();
 
-const routerTodos = require("./todos");
+const routerTodo = require("./todo");
 const routerAuth = require("./auth");
+const routerTodoItem = require("./todo-item");
+const routerUser = require("./user");
 
 router.use("/auth", routerAuth);
-router.use("/todos", routerTodos);
-
-router.get("/todo-items", require('../controllers/todo-items/list-one'));
-router.post("/todo-items", require('../controllers/todo-items/create-one'));
-router.put("/todo-items/:id", require('../controllers/todo-items/update-one'));
-router.delete("/todo-items/:id", require('../controllers/todo-items/delete-one'));
-
-router.get("/user", require('../controllers/users/users-all'));
-router.post("/user", require('../controllers/users/create-user'));
-router.put("/user/:id", require('../controllers/users/update-user'));
+router.use("/todo", routerTodo);
+router.use("/todo-item", routerTodoItem);
+router.use("/user", routerUser);
 
 module.exports = router;

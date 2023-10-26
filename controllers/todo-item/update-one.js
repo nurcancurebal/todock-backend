@@ -1,4 +1,4 @@
-const ModelTodoItems = require("../../models/todo-items");
+const ModelTodoItem = require("../../models/todo-item");
 
 module.exports = async function (req, res) {
 
@@ -7,7 +7,7 @@ module.exports = async function (req, res) {
         const params = req.params;
         const body = req.body;
 
-        const findOneTodoItem = await ModelTodoItems.findByIdAndUpdate(params.id, body);
+        const findOneTodoItem = await ModelTodoItem.findByIdAndUpdate(params.id, body);
 
         if (!findOneTodoItem) {
             throw new Error("Not found todo item!!!");

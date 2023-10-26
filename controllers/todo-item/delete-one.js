@@ -1,16 +1,15 @@
-const ModelTodos = require("../../models/todos");
+const ModelTodoItem = require("../../models/todo-item");
 
 module.exports = async function (req, res) {
 
     try {
 
         const params = req.params;
-        const body = req.body;
 
-        const findOneTodoItem = await ModelTodos.findByIdAndUpdate(params.id, body);
+        const findOneTodoItem = await ModelTodoItem.findByIdAndDelete(params.id);
 
         if (!findOneTodoItem) {
-            throw new Error("Not found todo!!!");
+            throw new Error("Not found todo item!!!");
         };
 
         res.send();
@@ -22,4 +21,5 @@ module.exports = async function (req, res) {
         res.send({ message: error.message });
 
     };
+
 }

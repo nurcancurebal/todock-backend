@@ -1,5 +1,5 @@
-const ModelTodos = require("../../models/todos");
-const ModelUsers = require("../../models/users");
+const ModelTodo = require("../../models/todo");
+const ModelUser = require("../../models/user");
 
 module.exports = async function (req, res) {
 
@@ -16,7 +16,7 @@ module.exports = async function (req, res) {
             userId: user._id
         };
 
-        await ModelTodos.create(data);
+        await ModelTodo.create(data);
 
         return res.send();
 

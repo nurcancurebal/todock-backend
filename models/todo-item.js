@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-const Model = mongoose.model('TodoItems',
+const Model = mongoose.model('TodoItem',
     {
         userId: {
             type: mongoose.Types.ObjectId,

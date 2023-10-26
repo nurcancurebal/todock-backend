@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
-const ModelTodos = require("../../models/todos");
-const ModelTodoItems = require("../../models/todo-items");
+const ModelTodo = require("../../models/todo");
+const ModelTodoItem = require("../../models/todo-item");
 
 module.exports = async function (req, res) {
 
@@ -10,8 +10,8 @@ module.exports = async function (req, res) {
 
         const _id = new mongoose.Types.ObjectId(params.id);
 
-        await ModelTodos.deleteMany({ _id });
-        await ModelTodoItems.deleteMany({ todoId: _id });
+        await ModelTodo.deleteMany({ _id });
+        await ModelTodoItem.deleteMany({ todoId: _id });
 
         res.send();
 

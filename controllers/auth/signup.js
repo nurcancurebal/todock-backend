@@ -1,4 +1,4 @@
-const ModelUsers = require("../../models/users");
+const ModelUser = require("../../models/user");
 
 module.exports = async function (req, res, next) {
 
@@ -11,7 +11,7 @@ module.exports = async function (req, res, next) {
         if (!body?.firstname) throw new Error("Firstname not found!");
         if (!body?.lastname) throw new Error("Lastname not found!");
         if (!body?.birthdate) throw new Error("Birthdate not found!");
-        
+
         const data = {
             username: body.username,
             password: body.password,
@@ -20,7 +20,7 @@ module.exports = async function (req, res, next) {
             birthdate: body.birthdate
         };
 
-        await ModelUsers.create(data);
+        await ModelUser.create(data);
 
         res.send();
 

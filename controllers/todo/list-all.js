@@ -1,5 +1,5 @@
-const ModelTodos = require("../../models/todos");
-const ModelTodoItems = require("../../models/todo-items");
+const ModelTodo = require("../../models/todo");
+const ModelTodoItem = require("../../models/todo-item");
 
 module.exports = async function (req, res, next) {
 
@@ -7,7 +7,7 @@ module.exports = async function (req, res, next) {
 
         const user = res.locals.user;
 
-        let result = await ModelTodos.find({ userId: user._id });
+        let result = await ModelTodo.find({ userId: user._id });
 
         result = Array.from(result).map(item => item._doc);
 
@@ -15,7 +15,7 @@ module.exports = async function (req, res, next) {
 
             const element = result[index];
 
-            element.items = await ModelTodoItems.find({ todoId: element._id, userId: user._id });
+            element.items = await ModelTodoItem.find({ todoId: element._id, userId: user._id });
         };
 
         return res.send(result);

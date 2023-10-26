@@ -2,7 +2,7 @@ const ModelTodo = require("../../models/todo");
 const ModelTodoItem = require("../../models/todo-item");
 const ModelUser = require("../../models/user");
 
-module.exports = async function (req, res) {
+module.exports = async function (req, res, next) {
 
     try {
 
@@ -25,9 +25,7 @@ module.exports = async function (req, res) {
 
     } catch (error) {
 
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
+        return next(error);
 
     };
 

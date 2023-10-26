@@ -1,6 +1,6 @@
 const ModelTodoItem = require("../../models/todo-item");
 
-module.exports = async function (req, res) {
+module.exports = async function (req, res, next) {
 
     try {
 
@@ -17,9 +17,7 @@ module.exports = async function (req, res) {
 
     } catch (error) {
 
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
+        return next(error);
 
     };
 

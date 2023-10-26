@@ -1,25 +1,23 @@
+const { ObjectId } = require("mongoose").Types;
+
 const ModelTodo = require("../../models/todo");
 
-module.exports = async function (req, res) {
+module.exports = async function (req, res, next) {
 
     try {
 
-        const params = req.params;
+        const _id = new ObjectId(req.params.id);
+
+        const user = res.locals.user;
         const body = req.body;
 
-        const findOneTodoItem = await ModelTodo.findByIdAndUpdate(params.id, body);
-
-        if (!findOneTodoItem) {
-            throw new Error("Not found todo!!!");
-        };
+        await ModelTodo.updateOne({ _id, userId: user._id }, body);
 
         res.send();
 
     } catch (error) {
 
-        console.error(error);
-        res.status(400);
-        res.send({ message: error.message });
+        return next(error);
 
     };
 }

@@ -1,17 +1,16 @@
+const { ObjectId } = require("mongoose").Types;
+
 const ModelTodoItem = require("../../models/todo-item");
 
 module.exports = async function (req, res, next) {
 
     try {
 
-        const _id = new ObjectId(req.params.id);
+        const item_id = new ObjectId(req.params.itemId);
+        const todo_id = new ObjectId(req.params.todoId);
         const user = res.locals.user;
 
-        const findOneTodoItem = await ModelTodoItem.findByIdAndDelete(params.id);
-
-        if (!findOneTodoItem) {
-            throw new Error("Not found todo item!!!");
-        };
+        await ModelTodoItem.deleteOne({ userId: user._id, todoId: todo_id, _id: item_id });
 
         res.send();
 

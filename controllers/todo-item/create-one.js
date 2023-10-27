@@ -7,18 +7,13 @@ module.exports = async function (req, res, next) {
     try {
 
         const body = req.body;
-        const params = req.params;
-
-        if (!body?.name) {
-            throw new Error("Bad Request!!!");
-        };
-
+        const todo_id = new ObjectId(req.params.todoId);
         const user = res.locals.user;
 
         const data = {
             name: body.name,
             userId: user._id,
-            todoId: new ObjectId(params.id)
+            todoId: todo_id
         };
 
         await ModelTodoItem.create(data);

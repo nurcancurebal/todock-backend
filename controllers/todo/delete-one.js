@@ -8,7 +8,6 @@ module.exports = async function (req, res, next) {
     try {
 
         const _id = new ObjectId(req.params.id);
-
         const user = res.locals.user;
 
         await ModelTodo.deleteMany({ _id, userId: user._id });

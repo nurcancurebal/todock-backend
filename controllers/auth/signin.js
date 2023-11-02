@@ -15,6 +15,8 @@ module.exports = async function (req, res, next) {
 
         const resultUser = await ModelUser.findOne({ username: body.username });
 
+        if(!resultUser) throw new Error("User not found!");
+
         if (body.password != resultUser.password) throw new Error("Unauthorized!");
 
         const token = jwt.sign({ id: resultUser._id.toString() }, SECRET);

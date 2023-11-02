@@ -5,15 +5,14 @@ module.exports = async function (req, res, next) {
     try {
 
         const user = res.locals.user;
-        const body = req.body;
 
-        const findUser = await ModelUser.findByIdAndUpdate(user._id, body);
+        const findUser = await ModelUser.findOne(user._id);
 
         if (!findUser) {
             throw new Error("Not found user!!!");
         };
 
-        res.send();
+        res.status(202).json(findUser._doc)
 
     } catch (error) {
 

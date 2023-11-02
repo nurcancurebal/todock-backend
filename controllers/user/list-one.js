@@ -12,7 +12,7 @@ module.exports = async function (req, res, next) {
             throw new Error("Not found user!!!");
         };
 
-        res.status(202).json(findUser._doc)
+        return res.send(findUser._doc)
 
     } catch (error) {
 

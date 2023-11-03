@@ -15,7 +15,7 @@ module.exports = async function (req, res, next) {
 
         const resultUser = await ModelUser.findOne({ username: body.username });
 
-        if(!resultUser) throw new Error("User not found!");
+        if (!resultUser) throw new Error("User not found!");
 
         if (body.password != resultUser.password) throw new Error("Unauthorized!");
 

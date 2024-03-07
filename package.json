@@ -1,6 +1,7 @@
 {
+    "name": "vue-todock-backend",
     "scripts": {
-        "start": "node index.js"
+        "start": "node ./index.js"
     },
     "dependencies": {
         "cors": "^2.8.5",

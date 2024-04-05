@@ -12,6 +12,7 @@ const Model = mongoose.model('User',
         },
         username: {
             type: String,
+            trim: true,
             required: true,
             unique: true
         },
@@ -21,6 +22,7 @@ const Model = mongoose.model('User',
         },
         password: {
             type: String,
+            trim: true,
             required: true
         }
     }

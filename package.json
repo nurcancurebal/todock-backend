@@ -1,5 +1,5 @@
 {
-    "name": "vue-todock-backend",
+    "name": "todock-backend",
     "scripts": {
         "start": "node ./index.js"
     },

@@ -10,9 +10,9 @@ router.use("/auth", routerAuth);
 router.use("/todo", routerTodo);
 router.use("/todo-item", routerTodoItem);
 router.use("/user", routerUser);
-router.get("/", (req, res) => {
+router.get("/", (_req, res) => {
   res.json({
-    message: "API - 👋🌎🌍🌏👋",
+    message: "TODOCK API - 👋🌎🌍🌏👋",
   });
 });
 

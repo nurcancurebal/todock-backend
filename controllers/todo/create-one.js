@@ -1,28 +1,25 @@
 const ModelTodo = require("../../models/todo");
 
 module.exports = async function (req, res, next) {
+  try {
+    const body = req.body;
 
-    try {
+    if (!body?.title) throw new Error("Title not found!");
 
-        const body = req.body;
+    const user = res.locals.user;
 
-        if (!body?.title) throw new Error("Title not found!");
+    let result = await ModelTodo.find({ userId: user._id });
 
-        const user = res.locals.user;
-
-        const data = {
-            title: body.title,
-            userId: user._id
-        };
-
-        await ModelTodo.create(data);
-
-        return res.send();
-
-    } catch (error) {
-
-        return next(error);
-
+    const data = {
+      title: body.title,
+      userId: user._id,
+      order: result.length,
     };
 
+    const resultData = await ModelTodo.create(data);
+
+    return res.send(resultData._doc);
+  } catch (error) {
+    return next(error);
+  }
 };

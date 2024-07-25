@@ -7,7 +7,9 @@ module.exports = async function (_req, res, next) {
 
     let result = await ModelTodo.find({ userId: user._id });
 
-    result = Array.from(result).map((item) => item._doc);
+    result = Array.from(result)
+      .map((item) => item._doc)
+      .sort((a, b) => a.order - b.order);
 
     for (let index = 0; index < result.length; index++) {
       const element = result[index];
@@ -16,6 +18,8 @@ module.exports = async function (_req, res, next) {
         todoId: element._id,
         userId: user._id,
       });
+
+      element.items.sort((a, b) => a.order - b.order);
     }
 
     return res.send(result);

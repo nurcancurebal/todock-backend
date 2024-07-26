@@ -6,10 +6,10 @@ module.exports = async function (req, res, next) {
   try {
     const _id = new ObjectId(req.params.id);
 
-    const user = res.locals.user;
+    const userId = res.locals.user._id;
     const body = req.body;
 
-    await ModelTodo.updateOne({ _id, userId: user._id }, body);
+    await ModelTodo.updateOne({ _id, userId }, body);
 
     res.send();
   } catch (error) {

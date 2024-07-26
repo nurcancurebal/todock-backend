@@ -3,9 +3,9 @@ const ModelTodoItem = require("../../models/todo-item");
 
 module.exports = async function (_req, res, next) {
   try {
-    const user = res.locals.user;
+    const userId = res.locals.user._id;
 
-    let result = await ModelTodo.find({ userId: user._id });
+    let result = await ModelTodo.find({ userId });
 
     result = Array.from(result)
       .map((item) => item._doc)
@@ -16,7 +16,7 @@ module.exports = async function (_req, res, next) {
 
       element.items = await ModelTodoItem.find({
         todoId: element._id,
-        userId: user._id,
+        userId,
       });
 
       element.items.sort((a, b) => a.order - b.order);

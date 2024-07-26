@@ -6,13 +6,13 @@ module.exports = async function (req, res, next) {
 
     if (!body?.title) throw new Error("Title not found!");
 
-    const user = res.locals.user;
+    const userId = res.locals.user._id;
 
-    let result = await ModelTodo.find({ userId: user._id });
+    let result = await ModelTodo.find({ userId });
 
     const data = {
       title: body.title,
-      userId: user._id,
+      userId,
       order: result.length,
     };
 

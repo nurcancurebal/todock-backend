@@ -6,17 +6,17 @@ const ModelTodoItem = require("../../models/todo-item");
 module.exports = async function (req, res, next) {
   try {
     const _id = new ObjectId(req.params.id);
-    const user = res.locals.user;
+    const userId = res.locals.user._id;
 
-    const deletedTodo = await ModelTodo.findOne({ _id, userId: user._id });
+    const deletedTodo = await ModelTodo.findOne({ _id, userId });
     const deletedOrder = deletedTodo._doc.order;
 
-    await ModelTodo.deleteOne({ _id, userId: user._id });
-    await ModelTodoItem.deleteMany({ todoId: _id, userId: user._id });
+    await ModelTodo.deleteOne({ _id, userId });
+    await ModelTodoItem.deleteMany({ todoId: _id, userId });
 
     const todosToUpdate = await ModelTodo.find({
       order: { $gt: deletedOrder },
-      userId: user._id,
+      userId,
     });
     for (const todo of todosToUpdate) {
       await ModelTodo.updateOne(

@@ -6,24 +6,24 @@ module.exports = async function (req, res, next) {
   try {
     const item_id = new ObjectId(req.params.itemId);
     const todo_id = new ObjectId(req.params.todoId);
-    const user = res.locals.user;
+    const userId = res.locals.user._id;
 
     const deletedTodoItem = await ModelTodoItem.findOne({
       _id: item_id,
       todoId: todo_id,
-      userId: user._id,
+      userId,
     });
     const deletedOrder = deletedTodoItem._doc.order;
 
     await ModelTodoItem.deleteOne({
-      userId: user._id,
+      userId,
       todoId: todo_id,
       _id: item_id,
     });
 
     const todoItemToUpdate = await ModelTodoItem.find({
       order: { $gt: deletedOrder },
-      userId: user._id,
+      userId,
       todoId: todo_id,
     });
 

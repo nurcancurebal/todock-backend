@@ -8,7 +8,7 @@ module.exports = async function (req, res, next) {
     const dropTodoId = new ObjectId(req.params.dropTodoId);
     const userId = res.locals.user._id;
 
-    const { dragOrder, dropOrder, dragItem } = req.body;
+    const { dragOrder, dropOrder, dragItem, dragId } = req.body;
 
     let todoItems = await ModelTodoItem.find({ userId, todoId: dropTodoId });
 

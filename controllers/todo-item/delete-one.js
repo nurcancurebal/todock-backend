@@ -27,9 +27,9 @@ module.exports = async function (req, res, next) {
       todoId: todo_id,
     });
 
-    for (const todo of todoItemToUpdate) {
+    for (const todoItem of todoItemToUpdate) {
       await ModelTodoItem.updateOne(
-        { _id: todo._doc._id },
+        { _id: todoItem._doc._id },
         { $inc: { order: -1 } }
       );
     }

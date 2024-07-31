@@ -9,7 +9,7 @@ const Model = mongoose.model("TodoItem", {
     type: mongoose.Types.ObjectId,
     required: true,
   },
-  item: {
+  name: {
     type: String,
     required: true,
   },

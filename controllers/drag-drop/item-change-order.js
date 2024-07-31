@@ -8,7 +8,7 @@ module.exports = async function (req, res, next) {
     const dropTodoId = new ObjectId(req.params.dropTodoId);
     const userId = res.locals.user._id;
 
-    const { dragOrder, dropOrder, dragItem, dragId, dropId } = req.body;
+    const { dragOrder, dropOrder, dragName, dragId, dropId } = req.body;
 
     let todoItems = await ModelTodoItem.find({ userId, todoId: dropTodoId });
 
@@ -29,8 +29,21 @@ module.exports = async function (req, res, next) {
         _id: dragId,
       });
 
+      const todoItemToUpdate = await ModelTodoItem.find({
+        order: { $gt: dragOrder },
+        userId,
+        todoId: dragTodoId,
+      });
+
+      for (const todoItem of todoItemToUpdate) {
+        await ModelTodoItem.updateOne(
+          { _id: todoItem._doc._id },
+          { $inc: { order: -1 } }
+        );
+      }
+
       await ModelTodoItem.create({
-        item: dragItem,
+        name: dragName,
         userId,
         todoId: dropTodoId,
         order: todoItems.length,

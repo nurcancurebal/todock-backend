@@ -8,7 +8,7 @@ module.exports = async function (req, res, next) {
     const todo_id = new ObjectId(req.params.todoId);
     const userId = res.locals.user._id;
 
-    if (!body?.item) throw new Error("Item not found!");
+    if (!body?.name) throw new Error("Name not found!");
 
     let result = await ModelTodoItem.find({
       userId,
@@ -16,7 +16,7 @@ module.exports = async function (req, res, next) {
     });
 
     const data = {
-      item: body.item,
+      name: body.name,
       userId,
       todoId: todo_id,
       order: result.length,

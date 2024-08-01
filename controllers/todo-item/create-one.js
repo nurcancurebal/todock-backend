@@ -15,6 +15,14 @@ module.exports = async function (req, res, next) {
       todoId: todo_id,
     });
 
+    if (body.name.length > 200)
+      throw new Error("Kart 200 karakterden fazla olamaz");
+
+    if (result.length >= 30)
+      throw new Error(
+        "Yeni kart eklenemiyor. Kart sayısı yeterli sınıra ulaştı"
+      );
+
     const data = {
       name: body.name,
       userId,

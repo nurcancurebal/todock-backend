@@ -8,14 +8,13 @@ module.exports = async function (req, res, next) {
     const todo_id = new ObjectId(req.params.todoId);
 
     const userId = res.locals.user._id;
-    const body = req.body;
+    const { name } = req.body;
 
-    if (body.name.length > 200)
-      throw new Error("Kart 200 karakterden fazla olamaz");
+    if (name.length > 200) throw new Error("Kart 200 karakterden fazla olamaz");
 
     await ModelTodoItem.updateOne(
       { _id: item_id, todoId: todo_id, userId },
-      body
+      name
     );
 
     res.send();

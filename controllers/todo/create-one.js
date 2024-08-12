@@ -2,11 +2,11 @@ const ModelTodo = require("../../models/todo");
 
 module.exports = async function (req, res, next) {
   try {
-    const body = req.body;
+    const { title } = req?.body;
 
-    if (!body?.title) throw new Error("Title not found!");
+    if (!title) throw new Error("Title not found!");
 
-    if (body.title.length > 20)
+    if (title.length > 20)
       throw new Error("Başlık 20 karakterden fazla olamaz");
 
     const userId = res.locals.user._id;
@@ -19,7 +19,7 @@ module.exports = async function (req, res, next) {
       );
 
     const data = {
-      title: body.title,
+      title,
       userId,
       order: result.length,
     };

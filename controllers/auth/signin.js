@@ -7,16 +7,17 @@ const { SECRET_KEY } = process.env;
 
 module.exports = async function (req, res, next) {
   try {
-    const body = req.body;
+    const { username } = req?.body;
+    const { password } = req?.body;
 
-    if (!body?.username) throw new Error("Username not found!");
-    if (!body?.password) throw new Error("Password not found!");
+    if (!username) throw new Error("Username not found!");
+    if (!password) throw new Error("Password not found!");
 
-    const resultUser = await ModelUser.findOne({ username: body.username });
+    const resultUser = await ModelUser.findOne({ username });
 
     if (!resultUser) throw new Error("User not found!");
 
-    const hashedPassword = md5(body.password);
+    const hashedPassword = md5(password);
 
     if (hashedPassword != resultUser.password) throw new Error("Unauthorized!");
 

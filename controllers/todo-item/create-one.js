@@ -4,19 +4,18 @@ const ModelTodoItem = require("../../models/todo-item");
 
 module.exports = async function (req, res, next) {
   try {
-    const body = req.body;
+    const { name } = req.body;
     const todo_id = new ObjectId(req.params.todoId);
     const userId = res.locals.user._id;
 
-    if (!body?.name) throw new Error("Name not found!");
+    if (!name) throw new Error("Name not found!");
 
     let result = await ModelTodoItem.find({
       userId,
       todoId: todo_id,
     });
 
-    if (body.name.length > 200)
-      throw new Error("Kart 200 karakterden fazla olamaz");
+    if (name.length > 200) throw new Error("Kart 200 karakterden fazla olamaz");
 
     if (result.length >= 30)
       throw new Error(
@@ -24,7 +23,7 @@ module.exports = async function (req, res, next) {
       );
 
     const data = {
-      name: body.name,
+      name,
       userId,
       todoId: todo_id,
       order: result.length,

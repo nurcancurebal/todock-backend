@@ -6,8 +6,7 @@ module.exports = async function (req, res, next) {
   try {
     const dragId = new ObjectId(req.params.dragId);
     const dropId = new ObjectId(req.params.dropId);
-    const dragOrder = req.body.dragOrder;
-    const dropOrder = req.body.dropOrder;
+    const { dragOrder, dropOrder } = req.body;
     const userId = res.locals.user._id;
 
     await ModelTodo.updateOne({ _id: dragId, userId }, { order: dropOrder });

@@ -1,5 +1,22 @@
 {
     "name": "todock-backend",
+    "version": "1.0.0",
+    "description": "Backend for todock app",
+    "main": "index.js",
+    "keywords": [
+        "todock",
+        "backend",
+        "express",
+        "mongodb",
+        "mongoose",
+        "jwt",
+        "cors",
+        "dotenv",
+        "joi",
+        "md5",
+        "jsonwebtoken",
+        "bcrypt"
+    ],
     "scripts": {
         "start": "node ./index.js"
     },

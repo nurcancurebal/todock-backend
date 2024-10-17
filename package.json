@@ -3,6 +3,13 @@
     "version": "1.0.0",
     "description": "Backend for todock app",
     "main": "index.js",
+    "scripts": {
+        "start": "node ./index.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nurcancurebal/todock-backend"
+    },
     "keywords": [
         "todock",
         "backend",
@@ -16,10 +23,9 @@
         "md5",
         "jsonwebtoken",
         "bcrypt"
-    ],
-    "scripts": {
-        "start": "node ./index.js"
-    },
+    ], 
+    "author": "Nurcan Cürebal",
+    "license": "MIT",   
     "dependencies": {
         "cors": "^2.8.5",
         "dotenv": "^16.3.1",
@@ -29,5 +35,6 @@
         "md5": "^2.3.0",
         "mongodb": "^5.7.0",
         "mongoose": "^7.4.3"
-    }
+    },
+    "private": true
 }
